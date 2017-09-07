@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from maps.views import index
+from maps.views import index, about, contact
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', index, name='index'),
+    url(r'^about/$', about, name='index'),
+    url(r'^contact/$', contact, name='index'),
     url(r'^test-page', include('django.contrib.flatpages.urls')),
 ]
