@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from maps.views import index, about, contact
+from django.views.generic import TemplateView
+from maps.views import IndexView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', index, name='index'),
-    url(r'^about/$', about, name='index'),
-    url(r'^contact/$', contact, name='index'),
+    url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^about/$', TemplateView.as_view(template_name="about.html")),
+    url(r'^contact/$', TemplateView.as_view(template_name="contact.html")),
     url(r'^test-page', include('django.contrib.flatpages.urls')),
 ]
