@@ -16,11 +16,8 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
-from maps.views import (
-    IndexView, 
-    PostListView, 
-    PostDetailView
-)
+
+from maps.views import IndexView, PostDetailView, PostListView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

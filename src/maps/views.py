@@ -1,10 +1,11 @@
 from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.views import View
-from django.views.generic import ListView, TemplateView, DetailView
+from django.views.generic import DetailView, ListView, TemplateView
 
 from .models import Post
+
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -45,4 +46,3 @@ class PostDetailView(DetailView):
         rest_id = self.kwargs.get('rest_id')
         obj = get_object_or_404(Post, id=rest_id)
         return obj
-
