@@ -16,12 +16,19 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
-from maps.views import IndexView
+from maps.views import IndexView, PostListView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
     url(r'^$', IndexView.as_view(), name='index'),
-    url(r'^about/$', TemplateView.as_view(template_name="about.html")),
-    url(r'^contact/$', TemplateView.as_view(template_name="contact.html")),
-    url(r'^test-page', include('django.contrib.flatpages.urls')),
+
+    url(r'^about/', TemplateView.as_view(template_name="about.html")),
+    url(r'^contact/', TemplateView.as_view(template_name="contact.html")),
+
+    url(r'^test-page/', include('django.contrib.flatpages.urls')),
+
+    url(r'^posts/$', PostListView.as_view()),
+    url(r'^posts/(?P<slug>\w+)/$', PostListView.as_view()),
+
 ]
