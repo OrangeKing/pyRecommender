@@ -16,7 +16,11 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
-from maps.views import IndexView, PostListView
+from maps.views import (
+    IndexView, 
+    PostListView, 
+    PostDetailView
+)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,5 +34,5 @@ urlpatterns = [
 
     url(r'^posts/$', PostListView.as_view()),
     url(r'^posts/(?P<slug>\w+)/$', PostListView.as_view()),
-
+    url(r'^posts/(?P<rest_id>\w+)/$', PostDetailView.as_view()),
 ]

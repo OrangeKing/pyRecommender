@@ -1,12 +1,23 @@
 from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, DetailView
 
 from .models import Post
 
 # Create your views here.
+class IndexView(TemplateView):
+    template_name = "index.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(IndexView, self).get_context_data(*args, **kwargs)
+        num = None
+        context = {
+            "num": num
+        }
+        return context
+
 
 class PostListView(ListView):
     template_name = "post_list.html"
@@ -22,13 +33,16 @@ class PostListView(ListView):
         return queryset
 
 
-class IndexView(TemplateView):
-    template_name = "index.html"
+class PostDetailView(DetailView):
+    template_name = "post_detail.html"
+    queryset = Post.objects.all()
 
     def get_context_data(self, *args, **kwargs):
-        context = super(IndexView, self).get_context_data(*args, **kwargs)
-        num = None
-        context = {
-            "num": num
-        }
+        context = super(PostDetailView, self).get_context_data(*args, **kwargs)
         return context
+
+    def get_object(self, *args, **kwargs):
+        rest_id = self.kwargs.get('rest_id')
+        obj = get_object_or_404(Post, id=rest_id)
+        return obj
+
