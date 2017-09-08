@@ -30,6 +30,6 @@ urlpatterns = [
     url(r'^test-page/', include('django.contrib.flatpages.urls')),
 
     url(r'^posts/$', PostListView.as_view()),
-    url(r'^posts/(?P<slug>\w+)/$', PostListView.as_view()),
-    url(r'^posts/(?P<rest_id>\w+)/$', PostDetailView.as_view()),
+    url(r'^posts/user/(?P<slug>\w+)/$', PostListView.as_view()),
+    url(r'^posts/(?P<slug>[\w-]+)/$', PostDetailView.as_view()),
 ]
