@@ -1,13 +1,27 @@
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
 
 from .models import Post
+from .forms import PostCreateForm
 
 
 # Create your views here.
+def post_add_view(request):
+    if request.method == "POST":
+        author = request.user
+        title = request.POST.get("title")
+        contents = request.POST.get("contents")
+        location = request.POST.get("location")
+        obj = Post.objects.create(author=author, title=title, contents=contents, location=location)
+        return HttpResponseRedirect("/posts/")
+
+    template_name = "post_add.html"
+    context = {}
+    return render(request, template_name, context)
+
 class IndexView(TemplateView):
     template_name = "index.html"
 
