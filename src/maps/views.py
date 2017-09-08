@@ -5,21 +5,29 @@ from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
 
 from .models import Post
-from .forms import PostCreateForm
+from .forms import PostAddForm
 
 
 # Create your views here.
 def post_add_view(request):
-    if request.method == "POST":
+    form = PostAddForm(request.POST or None)
+    errors = None
+    if form.is_valid():
         author = request.user
-        title = request.POST.get("title")
-        contents = request.POST.get("contents")
-        location = request.POST.get("location")
-        obj = Post.objects.create(author=author, title=title, contents=contents, location=location)
+        obj = Post.objects.create(
+            author=author, 
+            title=form.cleaned_data.get('title'), 
+            contents=form.cleaned_data.get('contents'), 
+            location=form.cleaned_data.get('location')
+            )
         return HttpResponseRedirect("/posts/")
 
+        if form.errors:
+            errors = form.errors
+            print(form.errors)
+
     template_name = "post_add.html"
-    context = {}
+    context = {"form": form, "errors": errors}
     return render(request, template_name, context)
 
 class IndexView(TemplateView):

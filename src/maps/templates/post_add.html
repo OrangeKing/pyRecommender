@@ -3,10 +3,16 @@
 
 {% block content %}
 <h1>Add new post:</h1>
+
+{% if errors %}
+{{ errors }}
+{% endif %}
+
 <form method="POST"> {% csrf_token %}
-    <input type="text" name="title" placeholder="Your title"></br>
+    <!-- <input type="text" name="title" placeholder="Your title"></br>
     <input type="text" name="contents" placeholder="Post contents"></br>
-    <input type="text" name="location" placeholder="Your location"></br>
+    <input type="text" name="location" placeholder="Your location"></br> -->
+    {{ form.as_p }}
     <button type="submit">SAVE</button>
 </form> 
 {% endblock content %}
