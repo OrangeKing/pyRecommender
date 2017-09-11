@@ -1,6 +1,8 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
@@ -44,7 +46,7 @@ class PostDetailView(DetailView):
         return context
 
 
-class PostAddView(CreateView):
+class PostAddView(LoginRequiredMixin, CreateView):
     template_name = "post_add.html"
     form_class = PostAddForm
     success_url = "/posts/"

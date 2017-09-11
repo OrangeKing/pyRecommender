@@ -1,6 +1,7 @@
 import datetime
 
-from django.contrib.auth.models import User
+from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import post_save, pre_save
 from django.utils import timezone
@@ -9,6 +10,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from .utils import unique_slug_generator
 from .validators import validate_location, validate_title
 
+User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 @python_2_unicode_compatible
@@ -23,6 +25,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('posts:detail', kwargs={'slug': self.slug})
 
     def was_published_recently(self):
         return self.timestamp >= timezone.now() - datetime.timedelta(days=1)
