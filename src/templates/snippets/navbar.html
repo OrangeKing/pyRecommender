@@ -1,6 +1,9 @@
 <div class="container">
     <h1>Django Maps Project</h1>
-    <a href="/">Home</a>    
-    <a href="/about/">About</a>
-    <a href="/contact/">Contact</a>
+    <a href="{% url 'index' %}">Home</a>    
+    <a href="{% url 'about' %}">About</a>
+    <a href="{% url 'contact' %}">Contact</a>
+    <a href="{% url 'posts:list' %}">All posts</a>
+    <a href="{% url 'login' %}">Login!</a>
+    <a href="{% url 'posts:add' %}">Add new post</a>
 </div>

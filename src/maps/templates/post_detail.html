@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block head_title %}Post detail || {{ block.super}}{% endblock head_title %}
+
+{% block content %}
+<h2>{{ object.title }}</h2>
+<div align="right"><b>{{object.author}}</b></div>              
+<p>{{ object.contents}}<br></p>
+<p>{{ object.location}}</p>
+<p><i>{{object.timestamp}}</i>
+{% endblock content %}
