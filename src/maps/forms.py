@@ -11,9 +11,3 @@ class PostAddForm(forms.ModelForm):
             'contents',
             'location'
         ]
-    
-        def clean_title(self):
-            title = self.cleaned_data.get("title")
-            if title == "":
-                raise forms.ValidationError("Not a valid title")
-            return title
