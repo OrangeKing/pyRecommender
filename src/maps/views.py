@@ -2,34 +2,13 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
-from .models import Post
 from .forms import PostAddForm
+from .models import Post
 
 
 # Create your views here.
-def post_add_view(request):
-    form = PostAddForm(request.POST or None)
-    errors = None
-    if form.is_valid():
-        author = request.user
-        obj = Post.objects.create(
-            author=author, 
-            title=form.cleaned_data.get('title'), 
-            contents=form.cleaned_data.get('contents'), 
-            location=form.cleaned_data.get('location')
-            )
-        return HttpResponseRedirect("/posts/")
-
-        if form.errors:
-            errors = form.errors
-            print(form.errors)
-
-    template_name = "post_add.html"
-    context = {"form": form, "errors": errors}
-    return render(request, template_name, context)
-
 class IndexView(TemplateView):
     template_name = "index.html"
 
@@ -63,3 +42,13 @@ class PostDetailView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(PostDetailView, self).get_context_data(*args, **kwargs)
         return context
+
+
+class PostAddView(CreateView):
+    template_name = "post_add.html"
+    form_class = PostAddForm
+    success_url = "/posts/"
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)

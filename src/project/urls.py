@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
 
-from maps.views import IndexView, PostDetailView, PostListView, post_add_view
+from maps.views import IndexView, PostDetailView, PostListView, PostAddView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^test-page/', include('django.contrib.flatpages.urls')),
 
     url(r'^posts/$', PostListView.as_view()),
-    url(r'^posts/add/$', post_add_view),
+    url(r'^posts/add/$', PostAddView.as_view()),
     url(r'^posts/user/(?P<slug>\w+)/$', PostListView.as_view()),
     url(r'^posts/(?P<slug>[\w-]+)/$', PostDetailView.as_view()),
 ]
