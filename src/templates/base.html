@@ -9,11 +9,12 @@
     {% include "snippets/css.html" %}    
 </head>
 
-<body>
-    {% include "snippets/navbar.html" %}
+<body style="padding-top:50px;">
+    {% include "snippets/navbar_beta.html" %}
     <div class="container">
         {% block content %} {% endblock content %}
     </div>
+    {% include "snippets/footer_beta.html" %}    
     {% include "snippets/js.html" %}
 </body>
 </html>
