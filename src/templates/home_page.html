@@ -23,14 +23,23 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-        <a class="navbar-brand" href="#">Django Maps</a>
+        <a class="navbar-brand" href="{% url 'index' %}">Django Maps <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-              </a></li>
+          <li ><a href="#">About</a></li>
+          <li ><a href="{% url 'contact' %}">Contact</a></li>
+          <li ><a href="{% url 'posts:list' %}">All posts</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-center">
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
         </ul>
         <!-- Right part of a navbar -->
         <ul class="nav navbar-nav navbar-right">
@@ -95,14 +104,7 @@
 
   <!-- Footer -->
   <footer id="footer">
-    <div class="container text-left">
-      <h4>Contact us</h4>
-      <address>
-        <a href="http://www.mobica.com/">Mobica</a><br> Skierniewicka 10a, Warsaw<br> Poland
-      </address>
-      <hr>
-    </div>
-    <div class="container text-right">
+    <div class="container text-center">
       <p class="text-muted credit">Built With <a href="http://getbootstrap.com">Bootstrap</a></p>
       <p class="text-muted credit">© 2017, Mobica Limited, All rights reserved</p>
     </div>
