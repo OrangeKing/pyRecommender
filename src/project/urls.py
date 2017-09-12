@@ -28,4 +28,8 @@ urlpatterns = [
     url(r'^test-page/', include('django.contrib.flatpages.urls')),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^posts/', include('maps.urls', namespace='posts')),
+
+    url(r'^seba/home/$', TemplateView.as_view(template_name="home_page.html")),
+    url(r'^seba/logged/$', TemplateView.as_view(template_name="logged_in_page.html")),
+    url(r'^seba/register/$', TemplateView.as_view(template_name="register_page.html")),
 ]
