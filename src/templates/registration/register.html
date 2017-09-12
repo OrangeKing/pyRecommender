@@ -1,18 +1,37 @@
-{% extends "base.html" %}
-{% block head_title %}Register || {{ block.super}}{% endblock head_title %}
-
+{% extends "base.html" %} {% block head_title %}Register · {{ block.super}} {% endblock head_title %} 
 {% block content %}
-<h1>Register new user:</h1>
 
-{% if form.errors.non_field_errors %}
-{{ form.errors.non_field_errors }}
+{% if form.errors.non_field_errors %} 
+    {{ form.errors.non_field_errors }} 
 {% endif %}
 
-<form method="POST"> {% csrf_token %}
-    <!-- <input type="text" name="title" placeholder="Your title"></br>
-    <input type="text" name="contents" placeholder="Post contents"></br>
-    <input type="text" name="location" placeholder="Your location"></br> -->
-    {{ form.as_p }}
-    <button type="submit">SAVE</button>
-</form> 
+<!-- Form -->
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+
+        <div class="jumbotron-content">
+            <h3>Please complete your registration by filling this form</h2>
+            <form method="POST"> {% csrf_token %}
+                <!-- {{ form.as_p }} -->
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" class="form-control" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" class="form-control" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" class="form-control" placeholder="Email">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-large">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% include "snippets/rick_modal.html" %}
+
 {% endblock content %}

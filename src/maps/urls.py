@@ -1,6 +1,6 @@
-from django.conf.urls import include, url
+from django.conf.urls import url
 
-from .views import IndexView, PostAddView, PostDetailView, PostListView
+from .views import PostAddView, PostDetailView, PostListView
 
 urlpatterns = [
     url(r'^$', PostListView.as_view(), name='list'),

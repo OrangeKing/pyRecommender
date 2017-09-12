@@ -1,7 +1,6 @@
-{% extends "base.html" %}
-{% block head_title %}Welcome || {{ block.super}}{% endblock head_title %}
+{% extends "base.html" %} 
+{% block head_title %}Welcome · {{ block.super}} {% endblock head_title %} 
 
 {% block content %}
-<h3>{{block.super}}</h3>
-<p>This is a landing page</p>
+{% include "snippets/carousel.html" %}
 {% endblock content %}

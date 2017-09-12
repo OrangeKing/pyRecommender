@@ -18,21 +18,22 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import TemplateView
 
-from maps.views import IndexView, PostAddView, PostDetailView, PostListView, UserFormView
+from maps.views import IndexView, UserFormView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', IndexView.as_view(), name='index'),
+
+
     url(r'^about/', TemplateView.as_view(template_name="about.html"), name='about'),
     url(r'^contact/', TemplateView.as_view(template_name="contact.html"), name='contact'),
+
     url(r'^test-page/', include('django.contrib.flatpages.urls')),
+
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
-    url(r'^posts/', include('maps.urls', namespace='posts')),
 
-    url(r'^register/', UserFormView.as_view()),
-    
-    url(r'^seba/home/$', TemplateView.as_view(template_name="home_page.html")),
-    url(r'^seba/logged/$', TemplateView.as_view(template_name="logged_in_page.html")),
-    url(r'^seba/register/$', TemplateView.as_view(template_name="register_page.html")),
+    url(r'^register/', UserFormView.as_view(), name='register'),
+
+    url(r'^posts/', include('maps.urls', namespace='posts')),
 ]
