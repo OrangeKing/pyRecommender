@@ -6,4 +6,7 @@
     <a href="{% url 'posts:list' %}">All posts</a>
     <a href="{% url 'login' %}">Login!</a>
     <a href="{% url 'posts:add' %}">Add new post</a>
+    <b>LOGGED AS: {{request.user.username}}</b>
+    <a href="{% url 'logout' %}" style="float: right;">Logout</a>    
+    
 </div>
