@@ -4,7 +4,7 @@
 <hr>
 <div class="container">
 <ul class="list-unstyled">
-{% for obj in object_list %}
+{% for obj in object_list reversed %}
     <li>
         <h3><a href="{{ obj.get_absolute_url }}">{{ obj }}</a></h3>
         <div align="right">
