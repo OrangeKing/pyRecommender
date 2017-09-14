@@ -8,7 +8,7 @@ from django.db.models.signals import post_save, pre_save
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 
-from .utils import unique_slug_generator
+from .utils import unique_slug_generator, grab_location
 from .validators import validate_location, validate_title
 
 User = settings.AUTH_USER_MODEL
@@ -42,16 +42,16 @@ class Post(models.Model):
             short_contents = "{}...".format(match[0])
             return short_contents
 
-#([A-Z]\w+)
 
 # Instance saving signals below
 def rl_pre_save_reciever(sender, instance, *args, **kwargs):
-    instance.location = instance.location.capitalize()
     print('saving..')
     print(instance.timestamp)
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
 
+    if not instance.location:
+        instance.location = grab_location(instance)
 
 def rl_post_save_reciever(sender, instance, created, *args, **kwargs):
     print('saved')

@@ -1,5 +1,6 @@
 import random
 import string
+import re
 from django.utils.text import slugify
 
 DONT_USE = ['add']
@@ -32,3 +33,17 @@ def unique_slug_generator(instance, new_slug=None):
                 )
         return unique_slug_generator(instance, new_slug=new_slug)
     return slug
+
+
+def grab_location(instance, new_location=None):
+    if new_location is not None:
+        location = new_location
+    else:
+        hashtag = r"#([A-Z]\w+)"
+        match = re.findall(hashtag, instance.contents)
+        if match:
+            location = match[0]
+        else:
+            location = None
+
+    return location
