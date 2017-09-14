@@ -27,6 +27,10 @@ class IndexView(TemplateView):
 class PostListView(ListView):
     template_name = "post_list.html"
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(PostListView, self).get_context_data(*args, **kwargs)
+        return context
+
     def queryset(self):
         slug = self.kwargs.get("slug")
         if slug:

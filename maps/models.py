@@ -1,4 +1,5 @@
 import datetime
+import re
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -32,6 +33,16 @@ class Post(models.Model):
     def was_published_recently(self):
         return self.timestamp >= timezone.now() - datetime.timedelta(days=1)
 
+    def get_contents_preview(self):
+        if len(self.contents) < 200:
+            return self.contents
+        else:
+            regex = r"^((?:\S+\s+){25}\S+)"
+            match = re.findall(regex, self.contents)
+            short_contents = "{}...".format(match[0])
+            return short_contents
+
+#([A-Z]\w+)
 
 # Instance saving signals below
 def rl_pre_save_reciever(sender, instance, *args, **kwargs):
@@ -40,6 +51,7 @@ def rl_pre_save_reciever(sender, instance, *args, **kwargs):
     print(instance.timestamp)
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
+
 
 def rl_post_save_reciever(sender, instance, created, *args, **kwargs):
     print('saved')
