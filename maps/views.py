@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import PostAddForm, UserForm
 from .models import Post
 
@@ -25,18 +25,27 @@ class IndexView(TemplateView):
 
 
 class PostListView(ListView):
-    template_name = "post_list.html"
+    model = Post
+    template_name = "post_list.html"  # Default: <app_label>/<model_name>_list.html
+    context_object_name = 'object_list'  # Default: object_list
+    paginate_by = 5
+    queryset = Post.objects.all()  # Default: Model.objects.all()
 
-    def queryset(self):
-        slug = self.kwargs.get("slug")
-        if slug:
-            queryset = Post.objects.filter(
-                # | Q(author__username__icontains=slug)
-                Q(author__username__iexact=slug)
-            )
-        else:
-            queryset = Post.objects.all()
-        return queryset
+    """def listing(self):
+        queryset_list = self.queryset()
+        paginator = Paginator(queryset_list, 3)  # Show 3 contacts per page
+
+        page = self.request.GET.get('page')
+        try:
+            queryset = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            queryset = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            queryset = paginator.page(paginator.num_pages)
+
+        return render(self.request, 'post_list.html', {'object_list': queryset})"""
 
 
 class PostDetailView(DetailView):

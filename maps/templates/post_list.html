@@ -2,14 +2,15 @@
 <hr>
 <div class="container">
 
-
+    
     {% for obj in object_list reversed %}
     <div class="panel panel-default">
-        <div class="panel-heading"><h3><a href="{{ obj.get_absolute_url }}">{{ obj }}</a>, by {{obj.author}}</h3>
+        <div class="panel-heading">
+            <h3><a href="{{ obj.get_absolute_url }}">{{ obj }}</a>, by {{obj.author}}</h3>
         </div>
         <div class="panel-body">
             <p class="lead">{{ obj.contents }}</p>
-{% if obj.contents|length > 5 %}
+            {% if obj.contents|length > 5 %}
             <p><a href="{{ obj.get_absolute_url }}">Read more</a></p>
             {% endif %}
         </div>
@@ -18,4 +19,23 @@
             <h4><span class="label" style="background-color:#95a5a6"><b>{{obj.location}}</b></span></h4>
         </div>
     </div>
-    {% endfor %} {% endblock content %}
+    {% endfor %}
+
+
+    {% if is_paginated %}
+    <div class="text-center">
+    <ul class="pagination pagination-lg">
+      {% for i in paginator.page_range %}
+        {% if object_list.number == i %}
+          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+     
+    </ul>
+</div>
+
+  {% endif %}
+</div>
+    {% endblock content %}
