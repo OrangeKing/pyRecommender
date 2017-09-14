@@ -31,7 +31,8 @@ class PostListView(ListView):
         slug = self.kwargs.get("slug")
         if slug:
             queryset = Post.objects.filter(
-                Q(author__username__iexact=slug) #| Q(author__username__icontains=slug)
+                # | Q(author__username__icontains=slug)
+                Q(author__username__iexact=slug)
             )
         else:
             queryset = Post.objects.all()
@@ -79,4 +80,3 @@ class UserFormView(View):
             user.set_password(password)
             user.save()
             return HttpResponseRedirect(self.success_url)
-
