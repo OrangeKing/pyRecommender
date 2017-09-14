@@ -1,10 +1,28 @@
-{% extends "base.html" %}
-{% block head_title %}Post detail · {{ block.super}} {% endblock head_title %}
+{% extends "base.html" %} {% block head_title %}Post detail · {{ block.super}} {% endblock head_title %} {% block content
+%}
+<div class="jumbotron jumbotron-fluid" style="background:#fff">
+    <div class="container">
+        {% ifequal user object.author %}
+        <div class="well well-lg">
+            <h3>{{ object.title }}, by Me</h3>
+        </div>
+        {% else %}
+        <div class="well well-lg">
+            <h3><b>{{ object.title }},</b> by {{ object.author }}</h3>
+        </div>
+        {% endifequal %}
+        <div class="jumbotron-content">
+            <div class="well well-lg">
+                <p class="lead">{{ object.contents}}</p>
+            </div>
+            <div class="well well-sm">
+                <h4><i class="glyphicon glyphicon-map-marker" style="display:inline;"></i> {{ object.location}}</h4>
+            </div>
+            <div class="well well-sm">
+                <h4><i class="glyphicon glyphicon-calendar" style="display:inline;"></i> {{object.timestamp}}</h4>
+            </div>
 
-{% block content %}
-<h2>{{ object.title }}</h2>
-<div align="right"><b>{{object.author}}</b></div>              
-<p>{{ object.contents}}<br></p>
-<p>{{ object.location}}</p>
-<p><i>{{object.timestamp}}</i>
+        </div>
+    </div>
+</div>
 {% endblock content %}

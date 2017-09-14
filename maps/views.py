@@ -36,7 +36,8 @@ class PostListView(ListView):
 
         if slug:
             queryset = Post.objects.filter(
-                Q(author__username__iexact=slug) #| Q(author__username__icontains=slug)
+                # | Q(author__username__icontains=slug)
+                Q(author__username__iexact=slug)
             )
         else:
             queryset = Post.objects.all()

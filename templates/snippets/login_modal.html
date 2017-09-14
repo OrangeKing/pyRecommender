@@ -1,3 +1,4 @@
+<form method="POST" action="{% url 'login' %}"> {% csrf_token %}    
   <!-- Login Modal -->
   <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -10,17 +11,25 @@
             <div class="modal-body">
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon3">Username</span>
-                <input type="text" class="form-control" placeholder="Username" id="basic-url" aria-describedby="basic-addon3">
+                <input type="text" name="username" class="form-control" placeholder="Username" id="basic-url" aria-describedby="basic-addon3">
               </div>
               <br>
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon3">Password </span>
-                <input type="password" class="form-control" placeholder="Password" id="basic-url" aria-describedby="basic-addon3">
+                <input type="password" name="password" class="form-control" placeholder="Password" id="basic-url" aria-describedby="basic-addon3">
               </div>
             </div>
             <div class="modal-footer">
-              <a href="{% url 'login' %}" class="btn btn-primary" role="button">Submit</a>
+
+                
+              <button type="submit" class="btn btn-primary"><span>Login</span></button>
+              {% if user.is_authenticated %}              
+              <input type="hidden" name="next" value="{% url 'login' %}" />
+              {% else %}
+              <input type="hidden" name="next" value="{{next}}"/>
+              {% endif %}              
             </div>
           </div>
         </div>
       </div>
+</form>

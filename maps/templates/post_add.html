@@ -1,18 +1,36 @@
-{% extends "base.html" %}
-{% block head_title %}Add new post · {{ block.super}} {% endblock head_title %}
+{% extends "base.html" %} 
+{% block head_title %}Add new post · {{ block.super}} {% endblock head_title %} 
+{% block content%} 
 
-{% block content %}
-<h1>Add new post:</h1>
-
-{% if form.errors.non_field_errors %}
-{{ form.errors.non_field_errors }}
+{% if form.errors.non_field_errors %} 
+{{ form.errors.non_field_errors }} 
 {% endif %}
 
-<form method="POST"> {% csrf_token %}
-    <!-- <input type="text" name="title" placeholder="Your title"></br>
-    <input type="text" name="contents" placeholder="Post contents"></br>
-    <input type="text" name="location" placeholder="Your location"></br> -->
-    {{ form.as_p }}
-    <button type="submit">SAVE</button>
-</form> 
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h3>New post</h2>
+            <br>
+            <div class="jumbotron-content">
+
+                <form method="POST"> {% csrf_token %}
+                    <!-- {{ form.as_p }} -->
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3"><b>Title</b></span>
+                        <input type="text" name="title" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="content">Post content:</label>
+                        <textarea class="form-control" rows="10" style="resize:vertical;" name="contents"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3"><b>Location</b></span>
+                        <input type="text" name="location" class="form-control">
+                    </div>
+                    <hr>
+                    <button type="submit" class="btn btn-primary btn-large">Save</button>
+                </form>
+            </div>
+    </div>
+</div>
 {% endblock content %}
