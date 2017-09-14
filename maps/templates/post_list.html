@@ -1,23 +1,21 @@
-{% extends "base.html" %}
-{% block head_title %}Post feed · {{ block.super}} {% endblock head_title %}
-{% block content %}
-<hr>
+{% extends "base.html" %} {% block head_title %}Post feed · {{ block.super}} {% endblock head_title %} {% block content %}
+<br>
 <div class="container">
-<ul class="list-unstyled">
-{% for obj in object_list reversed %}
-    <li>
-        <h3><a href="{{ obj.get_absolute_url }}">{{ obj }}</a></h3>
-        <div align="right">
-            <h4><span class="label label-primary"><b>{{obj.author}}</b></span></h4>            
-        </div> 
-        <p>{{ obj.contents }}<br>
-        <i>{{ obj.timestamp }}</i></p>
-        <div align="center">
-            <h4><span class="label label-warning"><b>{{obj.location}}</b></span></h4>            
-        </div> 
-        
-        <hr>
-    </li>
-{% endfor %}    
-</ul> 
-{% endblock content %}
+
+
+    {% for obj in object_list reversed %}
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3><a href="{{ obj.get_absolute_url }}">{{ obj }}</a>, by {{obj.author}}</h3>
+        </div>
+        <div class="panel-body">
+            <p class="lead">{{ obj.contents }}</p>
+{% if obj.contents|length > 5 %}
+            <p><a href="{{ obj.get_absolute_url }}">Read more</a></p>
+            {% endif %}
+        </div>
+        <div class="panel-footer">
+            <span class="badge">{{ obj.timestamp }}</span>
+            <h4><span class="label" style="background-color:#95a5a6"><b>{{obj.location}}</b></span></h4>
+        </div>
+    </div>
+    {% endfor %} {% endblock content %}
