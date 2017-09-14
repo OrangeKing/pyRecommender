@@ -10,7 +10,6 @@ from django.views.generic import CreateView, DetailView, ListView, TemplateView
 from .forms import PostAddForm, UserForm
 from .models import Post
 
-
 # Create your views here.
 class IndexView(TemplateView):
     template_name = "index.html"
@@ -32,13 +31,16 @@ class PostListView(ListView):
         return context
 
     def queryset(self):
-        slug = self.kwargs.get("slug")
+        #slug = self.kwargs.get("slug")
+        slug = self.request.GET.get('q')
+
         if slug:
             queryset = Post.objects.filter(
                 Q(author__username__iexact=slug) #| Q(author__username__icontains=slug)
             )
         else:
             queryset = Post.objects.all()
+
         return queryset
 
 
@@ -83,4 +85,3 @@ class UserFormView(View):
             user.set_password(password)
             user.save()
             return HttpResponseRedirect(self.success_url)
-
