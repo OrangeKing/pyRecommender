@@ -1,14 +1,16 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from .forms import PostAddForm, UserForm
 from .models import Post
+
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -46,8 +48,6 @@ class PostListView(ListView):
             queryset = Post.objects.all()
         return queryset
 
-    def paginator(self):
-        pass
 
 class PostDetailView(DetailView):
     template_name = "post_detail.html"
@@ -71,7 +71,7 @@ class PostAddView(LoginRequiredMixin, CreateView):
 class UserFormView(View):
     template_name = "registration/register.html"
     form_class = UserForm
-    success_url = "login"
+    success_url = "/"
 
     def form_valid(self, form):
         return super().form_valid(form)
