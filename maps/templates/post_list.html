@@ -1,24 +1,39 @@
-{% extends "base.html" %} {% block head_title %}Post feed · {{ block.super}} {% endblock head_title %} 
+{% extends "base.html" %} 
+{% block head_title %}Post feed · {{ block.super}} 
+{% endblock head_title %} 
 {% block content %}
 <hr>
 <div class="container">
+    {% for obj in object_list reversed %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3><a href="{{ obj.get_absolute_url }}">{{ obj }}</a>, by {{obj.author}}</h3>
+        </div>
+        <div class="panel-body">
+            <p class="lead">{{ obj.get_contents_preview }}</p>
+            {% if obj.contents|length > 200 %}
+            <p><a href="{{ obj.get_absolute_url }}">Read more</a></p>
+            {% endif %}
+        </div>
+        <div class="panel-footer">
+            <span class="badge">{{ obj.timestamp }}</span>
+            <h4><span class="label" style="background-color:#95a5a6"><b>{{obj.location}}</b></span></h4>
+        </div>
+    </div>
+    {% endfor %} 
+    
+    {% if is_paginated %}
+    <div class="text-center">
+        <ul class="pagination pagination-lg">
+            {% for i in paginator.page_range %} {% if object_list.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+            </li>
+            {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %} {% endfor %}
 
-{% for obj in object_list reversed %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3><a href="{{ obj.get_absolute_url }}">{{ obj }}</a>, by {{obj.author}}</h3>
+        </ul>
     </div>
-    <div class="panel-body">
-        <p class="lead">{{ obj.get_contents_preview }}</p>
-        {% if obj.contents|length > 5 %}
-        <p><a href="{{ obj.get_absolute_url }}">Read more</a></p>
-        {% endif %}
-    </div>
-    <div class="panel-footer">
-        <span class="badge">{{ obj.timestamp }}</span>
-        <h4><span class="label" style="background-color:#95a5a6"><b>{{obj.location}}</b></span></h4>
-    </div>
+    {% endif %}
 </div>
-{% endfor %} 
-
 {% endblock content %}

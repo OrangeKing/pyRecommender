@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import PostAddForm, UserForm
 from .models import Post
 
@@ -24,13 +24,16 @@ class IndexView(TemplateView):
 
 
 class PostListView(ListView):
+    
     template_name = "post_list.html"
+    model = Post
+    paginate_by = 10
 
     def get_context_data(self, *args, **kwargs):
-        context = super(PostListView, self).get_context_data(*args, **kwargs)
+        context = super(PostListView, self).get_context_data(**kwargs) 
         return context
 
-    def queryset(self):
+    def get_queryset(self):
         #slug = self.kwargs.get("slug")
         slug = self.request.GET.get('q')
 
@@ -41,9 +44,10 @@ class PostListView(ListView):
             )
         else:
             queryset = Post.objects.all()
-
         return queryset
 
+    def paginator(self):
+        pass
 
 class PostDetailView(DetailView):
     template_name = "post_detail.html"

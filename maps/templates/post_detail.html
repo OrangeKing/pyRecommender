@@ -1,10 +1,11 @@
-{% extends "base.html" %} {% block head_title %}Post detail · {{ block.super}} {% endblock head_title %} {% block content
-%}
+{% extends "base.html" %} 
+{% block head_title %}Post detail · {{ block.super}} {% endblock head_title %} 
+{% block content %}
 <div class="jumbotron jumbotron-fluid" style="background:#fff">
     <div class="container">
         {% ifequal user object.author %}
         <div class="well well-lg">
-            <h3>{{ object.title }}, by Me</h3>
+            <h2>{{ object.title }}, by Me</h2>
         </div>
         {% else %}
         <div class="well well-lg">
@@ -12,11 +13,11 @@
         </div>
         {% endifequal %}
         <div class="jumbotron-content">
-            <div class="well well-lg">
+            <div class="well well-lg" style="background: #FFF">
                 <p class="lead">{{ object.contents}}</p>
             </div>
             <div class="well well-sm">
-                <h4><i class="glyphicon glyphicon-map-marker" style="display:inline;"></i> {{ object.location}}</h4>
+                <h4><i class="glyphicon glyphicon-map-marker" style="display:inline;"></i> {{ object.location}}</p>
             </div>
             <div class="well well-sm">
                 <h4><i class="glyphicon glyphicon-calendar" style="display:inline;"></i> {{object.timestamp}}</h4>
