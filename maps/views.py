@@ -93,3 +93,5 @@ class UserFormView(CreateView):
             user.set_password(password)
             user.save()
             return HttpResponseRedirect(self.success_url)
+
+        return render(request, self.template_name, context={'form': form})

@@ -28,7 +28,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 SECRET_KEY = 'v4#4_x^k2&1+un4#g*s5g7^-#st-3$^ux*u_^ks2n(7civuihc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']

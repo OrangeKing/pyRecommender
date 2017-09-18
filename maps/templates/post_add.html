@@ -1,35 +1,43 @@
 {% extends "base.html" %} 
-{% block head_title %}Add new post · {{ block.super}} {% endblock head_title %} 
-{% block content%} 
-
+{% block head_title %} Add new post · {{ block.super}} {% endblock head_title %} 
+{% block content%}
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <h3>New post</h3>
-        {% if form.errors %} 
-        {{ form.errors }} 
-        {% endif %}
-            <br>
-            <div class="jumbotron-content">
-
-                <form method="POST"> {% csrf_token %}
-                    <!-- {{ form.as_p }} -->
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon3"><b>Title</b></span>
-                        <input type="text" name="title" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+        <div style="text-align: center;">
+            <h2>New post</h2>
+        </div>
+        <br>
+        <div class="jumbotron-content">
+            <form method="POST"> {% csrf_token %}
+                <div class="form-group">
+                    {% if form.title.errors %}
+                    <label for="content"><h4><b>Title:</b></h4></label>
+                    <div class="alert alert-danger" role="alert">
+                        <h4><b>{{ form.title.errors }}</b></h4>
                     </div>
-                    <hr>
-                    <div class="form-group">
-                        <label for="content">Post content:</label>
-                        <textarea class="form-control" rows="10" style="resize:vertical;" name="contents"></textarea>
+                    {% else %}
+                    <label for="content"><h4><b>Title:</b></h4></label> {% endif %}
+                    <input type="text" name="title" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                </div>
+                <hr>
+                <div class="form-group">
+                    {% if form.contents.errors %}
+                    <label for="content"><h4><b>Post content:</b></h4></label>
+                    <div class="alert alert-danger" role="alert">
+                        <h4><b>{{ form.contents.errors }}</b></h4>
                     </div>
-                    <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon3"><b>Location</b></span>
-                        <input type="text" name="location" class="form-control">
-                    </div>
-                    <hr>
-                    <button type="submit" class="btn btn-primary btn-large">Save</button>
-                </form>
-            </div>
+                    {% else %}
+                    <label for="content"><h4><b>Post content:</b></h4></label> {% endif %}
+                    <textarea class="form-control" rows="10" style="resize:vertical;" name="contents"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="content"><h4></b>Location:</b></h4></label>
+                    <input type="text" name="location" class="form-control">
+                </div>
+                <hr>
+                <button type="submit" class="btn btn-primary btn-large">Save</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock content %}
