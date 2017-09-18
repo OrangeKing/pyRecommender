@@ -14,18 +14,32 @@
             <form method="POST"> {% csrf_token %}
                 <!-- {{ form.as_p }} -->
                 <div class="form-group">
+                    {% if form.username.errors %}
                     <label for="username">Username:</label>
+                    <div class="alert alert-danger" role="alert"><h4><b>{{ form.username.errors }}</b></h4></div>                                                                                
+                    {% else %}                    
+                    <label for="username">Username:</label>
+                    {% endif %}                    
                     <input type="text" name="username" class="form-control" placeholder="Username">
                 </div>
                 <div class="form-group">
+                    {% if form.password.errors %}                        
                     <label for="password">Password:</label>
+                    <div class="alert alert-danger" role="alert"><h4><b>{{ form.password.errors }}</b></h4></div>                                                                                                    
+                    {% else %}
+                    <label for="password">Password:</label>
+                    {% endif %}                    
                     <input type="password" name="password" class="form-control" placeholder="Password">
                 </div>
                 <div class="form-group">
+                    {% if form.email.errors %}                                                
                     <label for="email">Email:</label>
+                    <div class="alert alert-danger" role="alert"><h4><b>{{ form.email.errors }}</b></h4></div>                                                                                                                        
+                    {% else %}
+                    <label for="email">Email:</label>                    
+                    {% endif %}                    
                     <input type="email" name="email" class="form-control" placeholder="Email">
                 </div>
-
                 <button type="submit" class="btn btn-primary btn-large">Sign Up</button>
             </form>
         </div>
