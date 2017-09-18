@@ -1,3 +1,4 @@
+import requests
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -36,7 +37,7 @@ class PostListView(ListView):
         return context
 
     def get_queryset(self):
-        #slug = self.kwargs.get("slug")
+        # slug = self.kwargs.get("slug")
         slug = self.request.GET.get('q')
 
         if slug:
@@ -52,12 +53,44 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     template_name = "post_detail.html"
     queryset = Post.objects.all()
-    loc = queryset[0].location
+
+    def get_object(self, queryset=queryset):
+        obj = super(PostDetailView, self).get_object(queryset=queryset)
+        return obj
+
+    def grab_location_data(self):
+        # free service for ip geolocaton
+        GOOGLE_MAPS_API_URL = 'http://maps.googleapis.com/maps/api/geocode/json'
+        IP_MAPS_API_URL = 'http://freegeoip.net/json'
+
+        loc = self.get_object().location
+        if loc is None:
+            ip_req = requests.get(IP_MAPS_API_URL)
+            ip_res = ip_req.json()
+            latitude = ip_res['latitude']
+            longitude = ip_res['longitude']
+
+            params = {
+                'latlng': '{},{}'.format(latitude, longitude),
+            }
+
+        else:
+            params = {
+                'address': loc,
+                'sensor': 'false',
+            }
+
+        # Do the request and get the response data
+        req = requests.get(GOOGLE_MAPS_API_URL, params=params)
+        res = req.json()
+        result = res['results'][0]
+        place_id = result['place_id']
+
+        return place_id
 
     def get_context_data(self, *args, **kwargs):
         context = super(PostDetailView, self).get_context_data(*args, **kwargs)
-        query_loc = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={}&key=AIzaSyA5ZnPs2IQeFFkYhx6ylY-s1oX6CBrUI6s".format("Warsaw")
-        context['query_loc'] = query_loc
+        context['query_loc'] = self.grab_location_data()
         return context
 
 
