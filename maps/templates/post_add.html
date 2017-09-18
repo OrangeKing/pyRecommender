@@ -2,13 +2,12 @@
 {% block head_title %}Add new post · {{ block.super}} {% endblock head_title %} 
 {% block content%} 
 
-{% if form.errors.non_field_errors %} 
-{{ form.errors.non_field_errors }} 
-{% endif %}
-
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <h3>New post</h2>
+        <h3>New post</h3>
+        {% if form.errors %} 
+        {{ form.errors }} 
+        {% endif %}
             <br>
             <div class="jumbotron-content">
 

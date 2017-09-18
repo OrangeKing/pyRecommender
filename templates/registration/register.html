@@ -1,16 +1,17 @@
-{% extends "base.html" %} {% block head_title %}Register · {{ block.super}} {% endblock head_title %} 
-{% block content %}
+{% extends "base.html" %} 
+{% block head_title %}Register · {{ block.super}} 
+{% endblock head_title %} 
 
-{% if form.errors.non_field_errors %} 
-    {{ form.errors.non_field_errors }} 
-{% endif %}
+{% block content %}
 
 <!-- Form -->
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-
         <div class="jumbotron-content">
-            <h3>Please complete your registration by filling this form</h2>
+            <h3>Please complete your registration by filling this form</h3>
+            {% if form.errors %} 
+            {{ form.errors }} 
+            {% endif %}            
             <form method="POST"> {% csrf_token %}
                 <!-- {{ form.as_p }} -->
                 <div class="form-group">

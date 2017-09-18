@@ -14,10 +14,10 @@
         {% endifequal %}
         <div class="jumbotron-content">
             <div class="well well-lg" style="background: #FFF">
-                <p class="lead">{{ object.contents}}</p>
-            </div>
+                <p class="lead">{{ object.contents|linebreaks }}</p>
+            </div>            
             <div class="well well-sm">
-                <h4><i class="glyphicon glyphicon-map-marker" style="display:inline;"></i> {{ object.location}}</p>
+                <h4><i class="glyphicon glyphicon-map-marker" style="display:inline;"></i> {{ object.location}} {{query_loc}}</p>
             </div>
             <div class="well well-sm">
                 <h4><i class="glyphicon glyphicon-calendar" style="display:inline;"></i> {{object.timestamp}}</h4>

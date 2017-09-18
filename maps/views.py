@@ -52,9 +52,12 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     template_name = "post_detail.html"
     queryset = Post.objects.all()
+    loc = queryset[0].location
 
     def get_context_data(self, *args, **kwargs):
         context = super(PostDetailView, self).get_context_data(*args, **kwargs)
+        query_loc = "https://maps.googleapis.com/maps/api/place/textsearch/json?query={}&key=AIzaSyA5ZnPs2IQeFFkYhx6ylY-s1oX6CBrUI6s".format("Warsaw")
+        context['query_loc'] = query_loc
         return context
 
 
@@ -68,7 +71,7 @@ class PostAddView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class UserFormView(View):
+class UserFormView(CreateView):
     template_name = "registration/register.html"
     form_class = UserForm
     success_url = "/"

@@ -9,14 +9,14 @@ from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 
 from .utils import unique_slug_generator, grab_location
-from .validators import validate_location, validate_title
+from .validators import validate_location, validate_title, validate_username
 
 User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 @python_2_unicode_compatible
 class Post(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, validators=[validate_username])
     title = models.CharField(max_length=200, validators=[validate_title])
     contents = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
