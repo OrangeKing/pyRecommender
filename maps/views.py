@@ -42,8 +42,9 @@ class PostListView(ListView):
         if slug:
             queryset = Post.objects.filter(
                 # | Q(author__username__icontains=slug)
-                Q(author__username__iexact=slug).order_by('-timestamp')
+                Q(author__username__iexact=slug)
             )
+            queryset.order_by('-timestamp')
         else:
             queryset = Post.objects.all().order_by('-timestamp')
         return queryset

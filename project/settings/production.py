@@ -30,7 +30,6 @@ SECRET_KEY = 'v4#4_x^k2&1+un4#g*s5g7^-#st-3$^ux*u_^ks2n(7civuihc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 SITE_DOMAIN = ALLOWED_HOSTS[0]
 
