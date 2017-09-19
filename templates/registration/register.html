@@ -18,7 +18,7 @@
                     {% else %}                    
                     <label for="username">Username:</label>
                     {% endif %}                    
-                    <input type="text" name="username" class="form-control" placeholder="Username">
+                    <input type="text" name="username" class="form-control" placeholder="Username" id="register_username">
                 </div>
                 <div class="form-group">
                     {% if form.password.errors %}                        
@@ -27,7 +27,7 @@
                     {% else %}
                     <label for="password">Password:</label>
                     {% endif %}                    
-                    <input type="password" name="password" class="form-control" placeholder="Password">
+                    <input type="password" name="password" class="form-control" placeholder="Password" id="register_password">
                 </div>
                 <div class="form-group">
                     {% if form.email.errors %}                                                
@@ -36,9 +36,9 @@
                     {% else %}
                     <label for="email">Email:</label>                    
                     {% endif %}                    
-                    <input type="email" name="email" class="form-control" placeholder="Email">
+                    <input type="email" name="email" class="form-control" placeholder="Email" id="register_email">
                 </div>
-                <button type="submit" class="btn btn-primary btn-large">Sign Up</button>
+                <button type="submit" class="btn btn-primary btn-large" id="register_confirm">Sign Up</button>
             </form>
         </div>
     </div>
