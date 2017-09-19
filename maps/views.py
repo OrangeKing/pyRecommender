@@ -27,10 +27,9 @@ class IndexView(TemplateView):
 
 
 class PostListView(ListView):
-    
     template_name = "post_list.html"
     model = Post
-    paginate_by = 10
+    paginate_by = 5
 
     def get_context_data(self, *args, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs) 
@@ -43,10 +42,10 @@ class PostListView(ListView):
         if slug:
             queryset = Post.objects.filter(
                 # | Q(author__username__icontains=slug)
-                Q(author__username__iexact=slug)
+                Q(author__username__iexact=slug).order_by('-timestamp')
             )
         else:
-            queryset = Post.objects.all()
+            queryset = Post.objects.all().order_by('-timestamp')
         return queryset
 
 
