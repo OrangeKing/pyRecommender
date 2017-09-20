@@ -14,7 +14,8 @@ import dj_database_url
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Quick-start development settings - unsuitable for production
@@ -38,12 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'django_user_agents',
+
 
     'maps'
 ]
+
+USER_AGENTS_CACHE = None
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
+
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -120,7 +128,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Europe/Warsaw' #Etc/GMT+1
+TIME_ZONE = 'Europe/Warsaw'  # Etc/GMT+1
 
 USE_I18N = True
 

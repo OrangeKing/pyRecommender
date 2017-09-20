@@ -23,10 +23,13 @@
                     {% else %}
                         {{ object.location }}
                     {% endifequal %}                    
-            <br>
-            <iframe width="600" height="450" frameborder="0" style="border:0"
+            <hr>
+            <div class="embed-responsive embed-responsive-4by3">
+                    
+            <iframe frameborder="0" style="border:0"
             src="https://www.google.com/maps/embed/v1/place?q=place_id:{{ query_loc }}&key=AIzaSyA5ZnPs2IQeFFkYhx6ylY-s1oX6CBrUI6s"></iframe>
-
+            </div>
+        
             </div>
             <div class="well well-sm">
                 <h4><i class="glyphicon glyphicon-calendar" style="display:inline;"></i>{{ object.timestamp }}</h4>
