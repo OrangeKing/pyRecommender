@@ -50,10 +50,12 @@ INSTALLED_APPS = [
 
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'django_user_agents',
 
     'maps'
 ]
 
+USER_AGENTS_CACHE = None
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
