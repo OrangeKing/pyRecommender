@@ -30,6 +30,7 @@ SECRET_KEY = 'v4#4_x^k2&1+un4#g*s5g7^-#st-3$^ux*u_^ks2n(7civuihc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 SITE_DOMAIN = ALLOWED_HOSTS[0]
 
@@ -50,10 +51,12 @@ INSTALLED_APPS = [
 
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'django_user_agents',
 
     'maps'
 ]
 
+USER_AGENTS_CACHE = None
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -64,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'

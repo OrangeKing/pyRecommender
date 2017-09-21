@@ -38,3 +38,22 @@ class PostModelTest(TestCase):
         post = Post.objects.get(id=1)
         max_length = post._meta.get_field('title').max_length
         self.assertEquals(max_length, 200)
+
+    def test_was_published_recently(self):
+        post = Post.objects.get(id=1)
+        self.assertEquals(post.was_published_recently(), True)
+
+    def test_get_contents_preview(self):
+        post = Post.objects.get(id=1)
+        short_contents = post.get_contents_preview()
+        self.assertEquals(len(post.contents) > len(short_contents), True)
+
+    def test_to_str(self):
+        post = Post.objects.get(id=1)
+        title = post.title
+        self.assertEquals(title, post.__str__())
+
+    def test_get_absolute_url(self):
+        post = Post.objects.get(id=1)
+        url = post.get_absolute_url()
+        self.assertEquals(url, "/posts/{}/".format(self.SLUG))
