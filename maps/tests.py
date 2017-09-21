@@ -2,6 +2,7 @@ from django.test import TestCase
 from maps.models import Post
 from time import strftime
 from django.contrib.auth.models import User
+from .forms import *
 
 
 class PostModelTest(TestCase):
@@ -104,3 +105,28 @@ class PostViewTest(TestCase):
         self.client.login(username='user', password='test')
         response = self.client.post('/nonexistent')
         self.assertEqual(response.status_code, 404)
+
+
+class PostValidatorsTest(TestCase):
+    TIMESTAMP_AUTHOR = strftime("U%d%m%y%H%M%S")
+    TIMESTAMP_TITLE = strftime("T%d%m%y%H%M%S")
+    CONTENT = """Short test content value"""
+    LOCATION = "Warsaw"
+    SLUG = "Mobica"
+
+    @classmethod
+    def setUpTestData(cls):
+        # Set up non-modified objects used by all test methods
+        test_user = User.objects.create_user(cls.TIMESTAMP_AUTHOR)
+        test_id = test_user.id
+        Post.objects.create(author_id=test_id, title=cls.TIMESTAMP_TITLE,
+                            contents=cls.CONTENT, location=cls.LOCATION, slug=cls.SLUG)
+
+    def test_validate_post(self):
+        author = User.objects.get(username=self.TIMESTAMP_AUTHOR)
+        author_id = author.id
+        valid_post = Post.objects.create(author_id=author_id)
+        test_post_form = PostAddForm(instance=valid_post)
+        self.assertEqual(test_post_form.is_valid(), False) # No data has been supplied yet.
+        test_post_form = PostAddForm({'title': self.TIMESTAMP_AUTHOR, 'contents': "password", 'location': "Warsaw" }, instance=valid_post)
+        self.assertEqual(test_post_form.is_valid(), True) # Now that you have given it data, it can validate.
