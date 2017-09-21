@@ -17,14 +17,6 @@ from .models import Post
 class IndexView(TemplateView):
     template_name = "index.html"
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(IndexView, self).get_context_data(*args, **kwargs)
-        num = None
-        context = {
-            "num": num
-        }
-        return context
-
 
 class PostListView(ListView):
     template_name = "post_list.html"

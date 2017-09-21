@@ -1,5 +1,5 @@
-from django.apps import AppConfig
+from django.apps import AppConfig # pragma: no cover
 
 
-class MapsConfig(AppConfig):
+class MapsConfig(AppConfig):    # pragma: no cover
     name = 'maps'

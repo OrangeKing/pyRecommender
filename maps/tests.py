@@ -57,3 +57,50 @@ class PostModelTest(TestCase):
         post = Post.objects.get(id=1)
         url = post.get_absolute_url()
         self.assertEquals(url, "/posts/{}/".format(self.SLUG))
+
+
+class PostViewTest(TestCase):
+    TIMESTAMP_AUTHOR = strftime("U%d%m%y%H%M%S")
+    TIMESTAMP_TITLE = strftime("T%d%m%y%H%M%S")
+    CONTENT = """Short test content value"""
+    LOCATION = "Warsaw"
+    SLUG = "Mobica"
+
+    @classmethod
+    def setUpTestData(cls):
+        # Set up non-modified objects used by all test methods
+        test_user = User.objects.create_user(cls.TIMESTAMP_AUTHOR)
+        test_id = test_user.id
+        Post.objects.create(author_id=test_id, title=cls.TIMESTAMP_TITLE,
+                            contents=cls.CONTENT, location=cls.LOCATION, slug=cls.SLUG)
+
+    def test_call_view_index(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'index.html')
+
+    def test_call_view_about(self):
+        response = self.client.get('/about/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'about.html')
+
+    def test_call_view_contact(self):
+        response = self.client.get('/contact/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'contact.html')
+
+    def test_call_view_denies_anonymous(self):
+        response = self.client.get('/posts/add/')
+        self.assertTemplateNotUsed(response)
+
+
+    def test_call_view_loads(self):
+        self.client.login(username=self.TIMESTAMP_AUTHOR, password=None)  # defined in fixture or with factory in setUp()
+        response = self.client.get('/posts/?q={TIMESTAMP_AUTHOR}')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'post_list.html')
+
+    def test_call_view_fails_blank(self):
+        self.client.login(username='user', password='test')
+        response = self.client.post('/nonexistent')
+        self.assertEqual(response.status_code, 404)
