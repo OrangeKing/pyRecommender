@@ -15,7 +15,7 @@ class PostModelTest(TestCase):
     the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
     like Aldus PageMaker including versions of Lorem Ipsum."""
     LOCATION = "Warsaw"
-    SLUG = "Mobica"
+    SLUG = "Orange"
 
     @classmethod
     def setUpTestData(cls):
@@ -65,7 +65,7 @@ class PostViewTest(TestCase):
     TIMESTAMP_TITLE = strftime("T%d%m%y%H%M%S")
     CONTENT = """Short test content value"""
     LOCATION = "Warsaw"
-    SLUG = "Mobica"
+    SLUG = "Orange"
 
     @classmethod
     def setUpTestData(cls):
@@ -112,7 +112,7 @@ class PostValidatorsTest(TestCase):
     TIMESTAMP_TITLE = strftime("T%d%m%y%H%M%S")
     CONTENT = """Short test content value"""
     LOCATION = "Warsaw"
-    SLUG = "Mobica"
+    SLUG = "Orange"
 
     @classmethod
     def setUpTestData(cls):

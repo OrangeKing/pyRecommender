@@ -1,5 +1,3 @@
-project/settings/base.py
-
 # Byte-compiled / optimized / DLL files
 project/__pycache__
 project/settings/__pycache__
@@ -58,6 +56,9 @@ coverage.xml
 *.log
 local_settings.py
 
+# DB migrations stuff:
+maps/migrations/
+
 # Flask stuff:
 instance/
 .webassets-cache
@@ -86,6 +87,7 @@ celerybeat-schedule
 # Environments
 .env
 .venv
+config/
 env/
 venv/
 ENV/
@@ -104,3 +106,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Local stuff
+.vscode/

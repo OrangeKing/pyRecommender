@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 
     'maps'
 ]
-
+SITE_ID = 1
 USER_AGENTS_CACHE = None
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -82,7 +82,7 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(PostDetailView, self).get_context_data(*args, **kwargs)
-        context['query_loc'] = self.grab_location_data()
+        #context['query_loc'] = self.grab_location_data()
         return context
 
 

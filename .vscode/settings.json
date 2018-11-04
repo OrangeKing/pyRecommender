@@ -1,8 +1,8 @@
 {
-    "python.pythonPath": "/home/int_daza/venvs/django_project/bin/python",
+    "python.pythonPath": "config/bin/python",
     "python.linting.pylintEnabled": false,
     "python.linting.pep8Enabled": true,
-    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Enabled": false,
     "python.formatting.formatOnSave": true,
     "python.linting.pep8Args": [
         "--ignore=E501"
