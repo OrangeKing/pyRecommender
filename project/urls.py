@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import TemplateView
 
-from maps.views import IndexView, UserFormView
+from maps.views import IndexView, UserFormView, MovieView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -36,4 +36,8 @@ urlpatterns = [
     url(r'^register/', UserFormView.as_view(), name='register'),
 
     url(r'^posts/', include('maps.urls', namespace='posts')),
+
+	#url(r'^movie/(?P<query>\w+)/$', MovieView, name='movie'),
+    url(r'^movie/$', MovieView.as_view(), name='movie'),
+
 ]

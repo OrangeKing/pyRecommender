@@ -1,0 +1,67 @@
+{% extends "base.html" %} 
+{% block head_title %}Movie details · {{ block.super}} {% endblock head_title %} 
+{% block content %}
+<div class="jumbotron jumbotron-fluid" style="background:rgb(172, 164, 164)">
+
+    <div class="container section">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well well-lg">
+                        <h2>{{ title }}</h2>
+                        <p><small class="label label-success">Rating</small></p>
+                </div>
+
+                <table class="table">
+                    <thead class="thead-dark" style="background:rgb(255, 255, 255)">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        </tr>
+                    </tbody>
+                </table>
+                      
+    
+            </div>
+            <div class="col-md-6">
+                <img src="{{ poster }}" alt=""/>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="well well-sm">
+        <h4><i class="glyphicon glyphicon-adjust" style="display:inline;"></i>
+            Similar movies:
+
+            {% for title, poster in recommendations %}
+                <p> {{ recommendations.title }} </p>
+            {% endfor %}
+        
+        <hr>
+    </div>
+
+
+</div>
+{% endblock content %}
+
+
+

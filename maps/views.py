@@ -1,4 +1,6 @@
 import requests
+import tmdbsimple as tmdb
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -8,10 +10,13 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
+from django.template import RequestContext, Context
+
 
 from .forms import PostAddForm, UserForm
 from .models import Post
 
+tmdb.API_KEY = '568dc1eab493883fb6a83c2ae42234d2'
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -120,3 +125,43 @@ class UserFormView(CreateView):
             return HttpResponseRedirect(self.success_url)
 
         return render(request, self.template_name, context={'form': form})
+
+
+class MovieView(DetailView):
+    template_name = 'movie.html'
+
+    def get_movie_data(self, *args, **kwargs):
+       
+        context = {}
+        movie = tmdb.Movies(603)
+
+        movie_info = movie.info()
+        context['title'] = movie_info['title']
+        context['genres'] = movie_info['genres']
+        context['overwiew'] = movie_info['overview']
+        context['runtime'] = movie_info['runtime']
+        context['score'] = movie_info['vote_average']
+
+        movie_credits = movie.credits()
+        context['crew'] = movie_credits['crew']
+        context['cast'] = movie_credits['cast']
+
+        # cast[i]['character']
+        # cast[i]['name']
+
+        context['poster'] = "https://image.tmdb.org/t/p/w500" + movie.poster_path
+
+        rec = movie.recommendations()['results']
+        movie_recommendations = [ {'title': rec[i]['title'], 'poster': "https://image.tmdb.org/t/p/w500" + rec[i]['poster_path']} for i in range(0,4)]
+        
+        context['recommendations'] = movie_recommendations
+        print(movie_recommendations)
+        return context
+
+    def get(self, request):
+        query = ""
+        if request.GET:
+            query = request.GET['query']
+
+
+        return render(request, self.template_name, context=self.get_movie_data())
