@@ -1,0 +1,35 @@
+{% extends "base.html" %} 
+{% block head_title %} Search movies · {{ block.super}} {% endblock head_title %} 
+{% block content%}
+<br>
+<br>
+<br>
+<section class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <form method="GET" action=".">
+					<input type="text" name="query" placeholder="Search Movies!" class="btn btn-default btn-lg" />
+					<input type="submit" value="Search" class="btn btn-default btn-lg"/>
+				</form>
+				<br>
+				<h1>Search results:</h1>
+				{% if show_results %}
+				{% for i in results %}
+					<p><a href="movie/?query={{ i.imdb_id }}">{{ i.movie_name }}</a> </p>
+				{% endfor %}
+				<br>
+				<h1>Recommended Similar Movies:</h1>
+				{% for i in recommended %}
+					<p><a href="/movie">{{ i.movie_name }}</a></p>
+				{% endfor %}
+				{% endif %}
+            </div>
+        </div>
+</section>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

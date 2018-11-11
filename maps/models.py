@@ -59,3 +59,19 @@ def rl_post_save_reciever(sender, instance, created, *args, **kwargs):
 
 pre_save.connect(rl_pre_save_reciever, sender=Post)
 post_save.connect(rl_post_save_reciever, sender=Post)
+
+class movies(models.Model):
+	movie_id = models.IntegerField(default=0)
+	imdb_id = models.IntegerField(default=0)
+	movie_name = models.CharField(max_length=200)
+	genre = models.CharField(max_length=200)
+	vectors = models.CharField(max_length=200)
+
+class links(models.Model):
+	movie_id = models.IntegerField(default=0)
+	url = models.CharField(max_length=300)
+
+class meansize(models.Model):
+	movie_id = models.IntegerField(default=0)
+	size = models.FloatField(default=0.0)
+	mean = models.FloatField(default=0.0)
