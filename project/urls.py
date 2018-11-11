@@ -38,10 +38,6 @@ urlpatterns = [
     url(r'^posts/', include('maps.urls', namespace='posts')),
 
 	url(r'^search/$', search, name='movie_search'),
-
-    #url(r'^search/$', MovSearchView.as_view(), name='movie_search'),
-	#url(r'^movie/(?P<query>\w+)/$', MovieView, name='movie'),
-    url(r'^movie/$', MovieView.as_view(), name='movie'),
-
+	url(r'^movie/(?P<slug>[\d]+)/$', MovieView.as_view(), name='movie'),
 
 ]

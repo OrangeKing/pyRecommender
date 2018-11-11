@@ -15,12 +15,12 @@
 				<h1>Search results:</h1>
 				{% if show_results %}
 				{% for i in results %}
-					<p><a href="movie/?query={{ i.imdb_id }}">{{ i.movie_name }}</a> </p>
+					<p><a href="/movie/{{ i.imdb_id }}">{{ i.movie_name }}</a> </p>
 				{% endfor %}
 				<br>
 				<h1>Recommended Similar Movies:</h1>
 				{% for i in recommended %}
-					<p><a href="/movie">{{ i.movie_name }}</a></p>
+					<p><a href="/movie/{{ i.imdb_id }}">{{ i.movie_name }}</a></p>
 				{% endfor %}
 				{% endif %}
             </div>

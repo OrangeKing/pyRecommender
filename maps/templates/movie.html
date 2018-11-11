@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block head_title %}Movie details · {{ block.super}} {% endblock head_title %}
+{% block content %}
+<div class="jumbotron jumbotron-fluid" style="background:rgb(172, 164, 164)">
+
+    <div class="container section">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well well-lg">
+                    <h3><b>{{ title }},</b> by
+                        {% for dir in director %}
+                        {{ dir }},
+                        {% endfor %}
+                    </h3>
+                    <p><small class="label label-success">Score: {{ score }}</small></p>
+                    <p style="font-size: 80%"><i>Runtime: {{ runtime }} mins.</i></p>
+                </div>
+
+                <table class="table">
+                    <thead class="thead-dark" style="background:rgb(255, 255, 255)">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Actor</th>
+                            <th scope="col">Character</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for obj in cast %}
+                        <tr>
+                            <th scope="row"><img src="https://image.tmdb.org/t/p/w500/{{ obj.profile_path }}" alt=" "
+                                    style="width: 32px; height: 44px;" /></th>
+                            <td><b>{{ obj.name }}</b></td>
+                            <td><i>{{ obj.character }}</i></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <img src="{{ poster }}" alt="" style="width: 555px; height: 666px;" />
+                <div class="well well-sm">
+                    <h4><i class="glyphicon glyphicon-adjust" style="display:inline;"></i></h4>
+                    <p> {{ overview }} </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

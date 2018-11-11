@@ -132,41 +132,44 @@ class UserFormView(CreateView):
 class MovieView(DetailView):
     template_name = 'movie.html'
 
-    def get_movie_data(self, *args, **kwargs):
-       
+    def get_movie_data(self, slug):
+
+        imdb_id = 'tt00' + str(slug)
+        external_source = 'imdb_id'
+
+        find = tmdb.Find(imdb_id)
+        response = find.info(external_source=external_source)
+
+        id = find.movie_results[0]['id']
+        movie = tmdb.Movies(id)
+        movie_info = movie.info()
+        
         context = {}
-        movie = tmdb.Movies(603)
 
         movie_info = movie.info()
         context['title'] = movie_info['title']
         context['genres'] = movie_info['genres']
-        context['overwiew'] = movie_info['overview']
+        context['overview'] = movie_info['overview']
         context['runtime'] = movie_info['runtime']
         context['score'] = movie_info['vote_average']
 
         movie_credits = movie.credits()
         context['crew'] = movie_credits['crew']
-        context['cast'] = movie_credits['cast']
-
-        # cast[i]['character']
-        # cast[i]['name']
+        context['director'] = [ context['crew'][i]['name'] for i in range(len(context['crew'])) if context['crew'][i]['job'] == 'Director' ]
+        
+        context['cast'] = movie_credits['cast'][:12]
 
         context['poster'] = "https://image.tmdb.org/t/p/w500" + movie.poster_path
 
-        rec = movie.recommendations()['results']
-        movie_recommendations = [ {'title': rec[i]['title'], 'poster': "https://image.tmdb.org/t/p/w500" + rec[i]['poster_path']} for i in range(0,4)]
-        
-        context['recommendations'] = movie_recommendations
-        print(movie_recommendations)
         return context
 
-    def get(self, request):
+    def get(self, request, slug):
         query = ""
         if request.GET:
             query = request.GET['query']
 
-
-        return render(request, self.template_name, context=self.get_movie_data())
+        print(slug)
+        return render(request, self.template_name, context=self.get_movie_data(slug))
 
 
 class MovSearchView(DetailView):
@@ -180,29 +183,29 @@ class MovSearchView(DetailView):
         return render(request, self.template_name)
 
 def search(request):
-	query = "no results found"
-	neighbors = []
-	recommended = []
-	results = []
-	posters = []
-	show_results = False
-	if request.GET:
-		query = request.GET['query']
-		results = movies.objects.filter (movie_name__icontains=query)[:10]
-		show_results = True
-		neighbors = recommend(results[0].movie_id)
+    template_name = "movie_search.html"
+    query = "no results found"
+    neighbors = []
+    recommended = []
+    results = []
+    posters = []
+    show_results = False
+    if request.GET:
+        query = request.GET['query']
+        results = movies.objects.filter (movie_name__icontains=query)[:10]
+        show_results = True
+        neighbors = recommend(results[0].movie_id)
+        
+        for i in neighbors[:10]:
+            recommends = movies.objects.get(movie_id=i)
+            recommended.append(recommends)
+            poster = links.objects.get(movie_id=i)
+            posters.append(poster)
+    variables = {
+        'posters': posters,
+        'recommended': recommended,
+        'results': results,
+        'show_results': show_results
+    }
 		
-		for i in neighbors[:10]:
-			recommends = movies.objects.get(movie_id=i)
-			recommended.append(recommends)
-			poster = links.objects.get(movie_id=i)
-			posters.append(poster)
-	variables = {
-		'posters': posters,
-		'recommended': recommended,
-		'results': results,
-		'show_results': show_results
-	}
-		
-	return render_to_response('movie_search.html',variables, RequestContext(request))
-
+    return render(request, template_name, context=variables)
