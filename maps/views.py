@@ -133,12 +133,19 @@ class MovieView(DetailView):
     template_name = 'movie.html'
 
     def get_movie_data(self, slug):
-
-        imdb_id = 'tt00' + str(slug)
+        imdb_id = str(slug)
         external_source = 'imdb_id'
 
-        find = tmdb.Find(imdb_id)
-        response = find.info(external_source=external_source)
+        find = tmdb.Find('tt0'+imdb_id)
+        resp = find.info(external_source=external_source)
+
+        if not resp['movie_results']:
+            find = tmdb.Find('tt00'+imdb_id)
+            resp = find.info(external_source=external_source)
+
+        if not resp['movie_results']:
+            find = tmdb.Find('tt'+imdb_id)
+            resp = find.info(external_source=external_source)
 
         id = find.movie_results[0]['id']
         movie = tmdb.Movies(id)
@@ -174,7 +181,6 @@ class MovieView(DetailView):
 
 class MovSearchView(DetailView):
     template_name = 'movie_search.html'
-    #http://localhost:8000/search/movie/?query=114781
     def get(self, request):
         query = ""
         if request.GET:
@@ -190,22 +196,31 @@ def search(request):
     results = []
     posters = []
     show_results = False
+    no_data = False
+
     if request.GET:
         query = request.GET['query']
         results = movies.objects.filter (movie_name__icontains=query)[:10]
-        show_results = True
-        neighbors = recommend(results[0].movie_id)
-        
-        for i in neighbors[:10]:
-            recommends = movies.objects.get(movie_id=i)
-            recommended.append(recommends)
-            poster = links.objects.get(movie_id=i)
-            posters.append(poster)
+
+        if results:
+            show_results = True
+            neighbors = recommend(results[0].movie_id)
+
+            for i in neighbors[:10]:
+                recommends = movies.objects.get(movie_id=i)
+                recommended.append(recommends)
+                poster = links.objects.get(movie_id=i)
+                posters.append(poster)
+
+        else:
+            no_data = True
+
     variables = {
         'posters': posters,
         'recommended': recommended,
         'results': results,
-        'show_results': show_results
+        'show_results': show_results,
+        'no_data': no_data
     }
 		
     return render(request, template_name, context=variables)

@@ -40,4 +40,7 @@ urlpatterns = [
 	url(r'^search/$', search, name='movie_search'),
 	url(r'^movie/(?P<slug>[\d]+)/$', MovieView.as_view(), name='movie'),
 
+    url(r'^mymovies/$', search, name='movie_profile'),
+
+
 ]

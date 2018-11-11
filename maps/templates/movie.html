@@ -28,8 +28,12 @@
                     <tbody>
                         {% for obj in cast %}
                         <tr>
-                            <th scope="row"><img src="https://image.tmdb.org/t/p/w500/{{ obj.profile_path }}" alt=" "
+                            {% if obj.profile_path %}
+                            <th scope="row"><img src="https://image.tmdb.org/t/p/w500/{{ obj.profile_path }}" alt=""
                                     style="width: 32px; height: 44px;" /></th>
+                            {% else %}
+                            <th scope="row">#</th>
+                            {% endif %}
                             <td><b>{{ obj.name }}</b></td>
                             <td><i>{{ obj.character }}</i></td>
                         </tr>

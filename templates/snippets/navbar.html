@@ -30,9 +30,14 @@
                 </form>
             </ul>
 
+            {% if request.user.username %}
             <ul class="nav navbar-nav">
-                <li><a href="{% url 'movie_search' %}">Search Movie</a></li>
+                <li><a href = "{% url 'movie_search' %}">Search Movie <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
+                    </a></li>
+                <li><a href = "{% url 'movie_profile' %}">Get Recommendations <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                    </a></li>
             </ul>
+            {% endif %}
 
             <!-- Right part of a navbar -->
             <ul class="nav navbar-nav navbar-right">
