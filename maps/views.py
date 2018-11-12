@@ -177,6 +177,19 @@ class MovieView(DetailView):
 
         print(slug)
         return render(request, self.template_name, context=self.get_movie_data(slug))
+    
+    def post(self, request):
+        success_url = "/"
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            user = form.save(commit=False)
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()
+            return HttpResponseRedirect(success_url)
+
 
 
 class MovSearchView(DetailView):

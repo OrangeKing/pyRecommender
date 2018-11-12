@@ -6,6 +6,7 @@ Django==1.11.4
 django-appconf==1.0.2
 django-crispy-forms==1.6.1
 django-registration==2.2
+django-separatedvaluesfield==0.6.0
 django-user-agents==0.3.2
 gunicorn==19.7.1
 idna==2.6

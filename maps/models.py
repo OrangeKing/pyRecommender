@@ -4,13 +4,13 @@ import re
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
+from separatedvaluesfield.models import SeparatedValuesField
 from django.db.models.signals import post_save, pre_save
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 
 from .utils import unique_slug_generator, grab_location
 from .validators import validate_location, validate_title, validate_username
-
 
 from django.contrib.auth.models import User
 from django.dispatch import receiver
@@ -24,8 +24,11 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
-    # watchlist = SeparatedValuesField()
-
+    watchlist = SeparatedValuesField(
+    null=True,
+    max_length=500,
+    token=',',
+    )
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -35,8 +38,6 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
-
-
 
 
 

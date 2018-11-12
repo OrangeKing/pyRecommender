@@ -14,10 +14,16 @@
                     </h3>
                     <p><small class="label label-success">Score: {{ score }}</small></p>
                     <p style="font-size: 80%"><i>Runtime: {{ runtime }} mins.</i></p>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
-                    </div>
+
+                    {% if watched %}
+                    <button type="button" class="btn btn-info btn-lg">
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Mak as watched
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-success btn-lg">
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Watched!
+                    </button>
+                    {% endif %}
                 </div>
 
                 <table class="table">
