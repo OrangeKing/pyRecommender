@@ -15,15 +15,17 @@
                     <p><small class="label label-success">Score: {{ score }}</small></p>
                     <p style="font-size: 80%"><i>Runtime: {{ runtime }} mins.</i></p>
 
-                    {% if watched %}
-                    <button type="button" class="btn btn-info btn-lg">
-                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Mak as watched
-                    </button>
-                    {% else %}
-                    <button type="button" class="btn btn-success btn-lg">
-                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Watched!
-                    </button>
-                    {% endif %}
+                    <form method="POST"> {% csrf_token %}
+                        {% if not watched %}
+                        <button id="watchedbtn" type="submit" class="btn btn-info btn-lg">
+                            <span id="watchedico" class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Mark as watched
+                        </button>
+                        {% else %}
+                        <button type="button" class="btn btn-success btn-lg">
+                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Watched!
+                        </button>
+                        {% endif %}
+                    </form>
                 </div>
 
                 <table class="table">

@@ -14,7 +14,7 @@ from django.template import RequestContext, Context
 
 
 from .forms import PostAddForm, UserForm
-from .models import Post, movies, links
+from .models import Post, movies, links, Profile
 
 from .recommendation import *
 
@@ -159,13 +159,10 @@ class MovieView(DetailView):
         context['overview'] = movie_info['overview']
         context['runtime'] = movie_info['runtime']
         context['score'] = movie_info['vote_average']
-
         movie_credits = movie.credits()
         context['crew'] = movie_credits['crew']
         context['director'] = [ context['crew'][i]['name'] for i in range(len(context['crew'])) if context['crew'][i]['job'] == 'Director' ]
-        
         context['cast'] = movie_credits['cast'][:12]
-
         context['poster'] = "https://image.tmdb.org/t/p/w500" + movie.poster_path
 
         return context
@@ -174,22 +171,21 @@ class MovieView(DetailView):
         query = ""
         if request.GET:
             query = request.GET['query']
-
-        print(slug)
         return render(request, self.template_name, context=self.get_movie_data(slug))
-    
-    def post(self, request):
-        success_url = "/"
-        form = self.form_class(request.POST)
 
-        if form.is_valid():
-            user = form.save(commit=False)
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user.set_password(password)
-            user.save()
-            return HttpResponseRedirect(success_url)
 
+    def post(self, request, slug):
+        success_url = "/mymovies/"
+
+        print('ayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
+        print(slug)
+
+        # instance = Profile.objects.get()
+        # instance = Profile.objects.update(watchlist=slug)
+        # instance.watchlist = slug
+        # instance.save()  
+  
+        return HttpResponseRedirect(success_url)
 
 
 class MovSearchView(DetailView):
