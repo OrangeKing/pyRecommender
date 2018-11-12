@@ -1,10 +1,10 @@
 {% extends "base.html" %} 
-{% block head_title %} Add new post · {{ block.super}} {% endblock head_title %} 
+{% block head_title %} Add new review · {{ block.super}} {% endblock head_title %} 
 {% block content%}
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <div style="text-align: center;">
-            <h2>New post</h2>
+            <h2>New review</h2>
         </div>
         <br>
         <div class="jumbotron-content">
@@ -22,12 +22,12 @@
                 <hr>
                 <div class="form-group">
                     {% if form.contents.errors %}
-                    <label for="content"><h4><b>Post content:</b></h4></label>
+                    <label for="content"><h4><b>Review content:</b></h4></label>
                     <div class="alert alert-danger" role="alert">
                         <h4><b>{{ form.contents.errors }}</b></h4>
                     </div>
                     {% else %}
-                    <label for="content"><h4><b>Post content:</b></h4></label> {% endif %}
+                    <label for="content"><h4><b>Review content:</b></h4></label> {% endif %}
                     <textarea class="form-control" rows="10" style="resize:vertical;" name="contents"></textarea>
                 </div>
                 <div class="form-group">

@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import TemplateView
 
-from maps.views import IndexView, UserFormView, MovieView, MovSearchView, search
+from maps.views import IndexView, UserFormView, MovieView, MovSearchView, search, profile
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -40,8 +40,6 @@ urlpatterns = [
 	url(r'^search/$', search, name='movie_search'),
 	url(r'^movie/(?P<slug>[\d]+)/$', MovieView.as_view(), name='movie'),
 
-    url(r'^mymovies/$', search, name='movie_profile'),
-    url(r'^test/', TemplateView.as_view(template_name="test.html"), name='test'),
-
+    url(r'^mymovies/$', profile, name='movie_profile'),
 
 ]

@@ -1,4 +1,5 @@
 import requests
+import random
 import tmdbsimple as tmdb
 
 from django.contrib.auth import authenticate, login
@@ -237,6 +238,47 @@ def search(request):
         'results': results,
         'show_results': show_results,
         'no_data': no_data
+    }
+		
+    return render(request, template_name, context=variables)
+
+def get_watchlist(watchlist):
+    data = watchlist.split(",")
+    data = list(filter(None, data))
+    return data
+
+def profile(request):
+    template_name = "movie_profile.html"
+
+    instance = Profile.objects.get(user=request.user)
+    vectorized_watchlist = get_watchlist(instance.watchlist)
+    watchlist = []
+    for movie_id in vectorized_watchlist:
+        mov = movies.objects.get(imdb_id=movie_id)
+        watchlist.append({'imdb_id': mov.imdb_id, 'movie_name': mov.movie_name, 'movie_id': mov.movie_id})
+
+    neighbors = []
+    recommended = []
+    results = []
+    show_results = False
+
+    if watchlist:
+        results = movies.objects.filter (movie_name__icontains=watchlist[0]['movie_name'])[:10]
+
+    if results:
+        show_results = True
+        sample = random.choice(watchlist)
+        neighbors = recommend(sample['movie_id'])
+
+        for i in neighbors[:10]:
+            recommends = movies.objects.get(movie_id=i)
+            recommended.append(recommends)
+
+    variables = {
+        'watchlist': watchlist,
+        'recommended': recommended,
+        'results': results,
+        'show_results': show_results
     }
 		
     return render(request, template_name, context=variables)
