@@ -11,6 +11,35 @@ from django.utils.encoding import python_2_unicode_compatible
 from .utils import unique_slug_generator, grab_location
 from .validators import validate_location, validate_title, validate_username
 
+
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+
+        
+# Customized user models here.
+class Profile(models.Model):
+
+    def __str__(self):
+        return str(self.user)
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(max_length=500, blank=True)
+    # watchlist = SeparatedValuesField()
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
+
+
+
+
 User = settings.AUTH_USER_MODEL
 
 # Create your models here.
