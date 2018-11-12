@@ -99,6 +99,21 @@ class PostAddView(LoginRequiredMixin, CreateView):
     form_class = PostAddForm
     success_url = "/posts/"
 
+    def get(self, request):
+        instance = Profile.objects.get(user=request.user)
+        vectorized_watchlist = get_watchlist(instance.watchlist)
+        watchlist = []
+        for movie_id in vectorized_watchlist:
+            mov = movies.objects.get(imdb_id=movie_id)
+            watchlist.append({'imdb_id': mov.imdb_id, 'movie_name': mov.movie_name, 'movie_id': mov.movie_id})
+
+        variables = {
+        'watchlist': watchlist
+        }
+		
+
+        return render(request, self.template_name, context=variables)
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)

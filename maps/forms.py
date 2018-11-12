@@ -10,7 +10,8 @@ class PostAddForm(forms.ModelForm):
         fields = [
             'title',
             'contents',
-            'location'
+            'location',
+            'movie'
         ]
 
 class UserForm(forms.ModelForm):

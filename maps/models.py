@@ -54,6 +54,7 @@ class Post(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     update_timestamp = models.DateTimeField(auto_now=True)
     location = models.CharField(max_length=120, null=True, blank=True, validators=[validate_location])
+    movie = models.CharField(max_length=120, null=True, blank=True)
     slug = models.SlugField(null=True, blank=True)
 
     def __str__(self):

@@ -5,7 +5,7 @@
     <div class="container">
         {% ifequal user object.author %}
         <div class="well well-lg">
-            <h2>{{ object.title }}, by Me</h2>
+            <h2>{{ object.title }}, by Me - {{ object.movie }}</h2>
         </div>
         {% else %}
         <div class="well well-lg">
@@ -16,7 +16,7 @@
             <div class="well well-lg" style="background: #FFF">
                 <p class="lead">{{ object.contents|linebreaks }}</p>
             </div>            
-            <div class="well well-sm">
+            <!-- <div class="well well-sm">
                 <h4><i class="glyphicon glyphicon-map-marker" style="display:inline;"></i>
                     {% ifequal None object.location %}
                         Current location
@@ -30,7 +30,7 @@
             src="https://www.google.com/maps/embed/v1/place?q=place_id:{{ query_loc }}&key=AIzaSyA5ZnPs2IQeFFkYhx6ylY-s1oX6CBrUI6s"></iframe>
             </div>
         
-            </div>
+            </div> -->
             <div class="well well-sm">
                 <h4><i class="glyphicon glyphicon-calendar" style="display:inline;"></i> {{ object.timestamp }}</h4>
             </div>
