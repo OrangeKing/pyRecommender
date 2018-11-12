@@ -132,7 +132,14 @@ class UserFormView(CreateView):
 class MovieView(DetailView):
     template_name = 'movie.html'
 
+    def get_movie_status(self, watchlist, slug):
+        data = watchlist.split(",")
+        return slug in data
+
     def get_movie_data(self, slug):
+        instance = Profile.objects.get(user=self.request.user)
+        movie_status = self.get_movie_status(instance.watchlist,str(slug))
+
         imdb_id = str(slug)
         external_source = 'imdb_id'
 
@@ -152,13 +159,13 @@ class MovieView(DetailView):
         movie_info = movie.info()
         
         context = {}
-
-        movie_info = movie.info()
+        context['status'] = movie_status
         context['title'] = movie_info['title']
         context['genres'] = movie_info['genres']
         context['overview'] = movie_info['overview']
         context['runtime'] = movie_info['runtime']
         context['score'] = movie_info['vote_average']
+
         movie_credits = movie.credits()
         context['crew'] = movie_credits['crew']
         context['director'] = [ context['crew'][i]['name'] for i in range(len(context['crew'])) if context['crew'][i]['job'] == 'Director' ]
@@ -166,6 +173,10 @@ class MovieView(DetailView):
         context['poster'] = "https://image.tmdb.org/t/p/w500" + movie.poster_path
 
         return context
+
+    def update_watchlist(self, watchlist, slug):
+        new_watchlist = watchlist + slug + ","
+        return new_watchlist
 
     def get(self, request, slug):
         query = ""
@@ -177,13 +188,9 @@ class MovieView(DetailView):
     def post(self, request, slug):
         success_url = "/mymovies/"
 
-        print('ayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
-        print(slug)
-
-        # instance = Profile.objects.get()
-        # instance = Profile.objects.update(watchlist=slug)
-        # instance.watchlist = slug
-        # instance.save()  
+        instance = Profile.objects.get(user=self.request.user)
+        instance.watchlist = self.update_watchlist(instance.watchlist,str(slug))
+        instance.save()  
   
         return HttpResponseRedirect(success_url)
 

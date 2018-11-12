@@ -16,7 +16,7 @@
                     <p style="font-size: 80%"><i>Runtime: {{ runtime }} mins.</i></p>
 
                     <form method="POST"> {% csrf_token %}
-                        {% if not watched %}
+                        {% if not status %}
                         <button id="watchedbtn" type="submit" class="btn btn-info btn-lg">
                             <span id="watchedico" class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Mark as watched
                         </button>
