@@ -27,7 +27,7 @@ requests==2.18.4
 six==1.10.0
 tmdbsimple==2.2.0
 ua-parser==0.7.3
-urllib3==1.22
+urllib3==1.26.5
 user-agents==1.1.0
 whitenoise==3.3.0
 wrapt==1.10.11
